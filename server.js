@@ -14,26 +14,23 @@ var todoList = [
 let primaryId = 2;
 // GET /api/todos
 app.get('/api/todos', (req, res) => {
-    res.send(`this is your todo's ${todoList.todo}`)
+    res.send(todoList)
 })
 // GET /api/todos/:id
-app.get(`/api/todos/ :id`, (req, res) => {
+app.get(`/api/todos/:id`, (req, res) => {
     const todoID = req.params.id;
     res.send(todoID) 
 })
 // POST /api/todos
 app.post('/api/todos', (req, res) => {
-    let newItem = [
+    let newItem = [ 
         ...todoList,
-        req.body
+        primaryId,
+        ...req.body
     ]
-    res.send(newItem)
-    todoList.push(req.body);
-
+    todoList.push(newItem);
+    primaryId++
     res.send(todoList)
-    res.status(200).json({
-        message: "Task created succesfully"
-    })
 })
 // PUT /api/todos/:id
 app.put('/api/todos', (req, res) => {
