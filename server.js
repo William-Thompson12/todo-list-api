@@ -9,15 +9,12 @@ var todoList = [
     {
         id: 1,
         todo: "Implement a REST API"
-    }
+    },
 ];
 let primaryId = 2;
 // GET /api/todos
-app.get('/api/todos', (req, res, next) => {
-    if (!todoList.length) {
-        next();
-    }
-    res.send(todoList.todo)
+app.get('/api/todos', (req, res) => {
+    res.send(`this is your todo's ${todoList.todo}`)
 })
 // GET /api/todos/:id
 app.get(`/api/todos/ :id`, (req, res) => {
@@ -26,13 +23,14 @@ app.get(`/api/todos/ :id`, (req, res) => {
 })
 // POST /api/todos
 app.post('/api/todos', (req, res) => {
-    todoList.push(
-        {
-        id: primaryId,
-        todo: req
-        });
-    primaryId++;
+    let newItem = [
+        ...todoList,
+        req.body
+    ]
+    res.send(newItem)
+    todoList.push(req.body);
 
+    res.send(todoList)
     res.status(200).json({
         message: "Task created succesfully"
     })
